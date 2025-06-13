@@ -1,0 +1,98 @@
+
+/* Sidebar.css */
+.sidebar {
+    position: fixed;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: rgb(41,46,50);
+    transition: 0.3s;
+    z-index: 9;
+  }
+/* Default styles for larger screens */
+.sidebar {
+  left: -195px;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    left: -250px; /* Adjust the left position for smaller screens */
+  }
+}
+
+  .sidebar.open {
+    left: 0;
+  }
+  
+  .toggle-btn {
+    position: fixed;
+    top: 20px;
+    left: 15px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .sidebar-content {
+    margin-top: 63px;
+    padding: 0px;
+    color: #fff;
+  }
+  
+  .dashboard-icon {
+    cursor: pointer; /* Optional: Add cursor pointer to indicate clickable */
+    position: relative; /* Required for positioning the tooltip */
+  }
+  
+  .all-icon:hover::after {
+    position: absolute; /* Position the tooltip */
+    padding: 5px 20px 5px 20px; /* Optional: Add padding */
+    background-color: rgb(43,48,53); /* Background color of the tooltip */
+    color: #ffffff; /* Text color of the tooltip */
+    border-radius: 5px; /* Optional: Add border radius */
+    font-size: 16px; /* Optional: Adjust font size */
+    white-space: nowrap; /* Prevent tooltip text from wrapping */
+    margin-left: 15px;
+    z-index: inherit;
+  }
+
+  .home-icon:hover::after {
+    content: "Home";
+  }
+  
+  .dashboard-icon:hover::after {
+    content: "Dashboard"; 
+  }
+
+  .shopping-icon:hover::after {
+    content: "Shopping"; 
+  }
+
+  .billing-icon:hover::after {
+    content: "Billing"; 
+  }
+
+  .booking-icon:hover::after {
+    content: "Booking"; 
+  }
+
+  .inventory-icon:hover::after {
+    content: "Inventory"; 
+  }
+
+  .order-icon:hover::after {
+    content: "Ordering"; 
+  }
+
+  .dtr-icon:hover::after {
+    content: "DTR"; 
+  }
+
+  .payroll-icon:hover::after {
+    content: "Payroll"; 
+  }
+  
+  .enrollment-icon:hover::after {
+    content: "Enrollment"; 
+  }
+  
