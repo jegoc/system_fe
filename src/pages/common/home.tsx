@@ -25,10 +25,18 @@ import inventory from '../../images/inventory.png';
 import avatar from '../../images/me.jpg'; 
 import { FaLinkedin } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import './css/common.css';
 
 const Home: React.FC = () =>{
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setAnimate(true), 100); // delay start
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,6 +77,9 @@ const Home: React.FC = () =>{
                       <Button href="https://www.linkedin.com/in/joseph-bryan-egoc" target='_blank' variant="secondary" size="sm">
                         <FaLinkedin size={16}/> View LinkedIn Profile
                       </Button>
+                      <Button href="https://github.com/jegoc" target='_blank' variant="secondary" size="sm">
+                        <FaGithub size={16}/> View GitHub Profile
+                      </Button>
                     </div>
                   </Col>
 
@@ -81,136 +92,115 @@ const Home: React.FC = () =>{
 
                         <h5 className='mt-5'>TECH STACK LEVELS</h5>
                         <hr />
-                        <Row>
+                    <Row>
                       <Col md={6}>
-                      <div className="mt-3">
-                        <h5 className='text-info'>Front-End</h5>
-                        {[
-                          { label: "Javascript", level: 8 },
-                          { label: "Typescript", level: 7 },
-                          { label: "React", level: 7 },
-                          { label: "React Native", level: 3 },
-                          { label: "Redux", level: 7 },
-                          { label: "HTML", level: 9 },
-                          { label: "CSS", level: 9 },
-                          { label: "Bootstrap", level: 8 },
-                        ].map((skill, idx) => (
-                          <div key={idx} className="mb-2">
-                            <div className="d-flex justify-content-between">
-                              <span>{skill.label}</span>
+                        <div className="mt-3">
+                          <h5 className='text-info'>Front-End</h5>
+                          {[
+                            { label: "Javascript", level: 8 },
+                            { label: "Typescript", level: 7 },
+                            { label: "React", level: 7 },
+                            { label: "Redux", level: 7 },
+                            { label: "HTML", level: 9 },
+                            { label: "CSS", level: 9 },
+                            { label: "Bootstrap", level: 9 },
+                          ].map((skill, idx) => (
+                            <div key={idx} className="mb-2">
+                              <div className="d-flex justify-content-between">
+                                <span>{skill.label}</span>
+                              </div>
+                              <div className="d-flex gap-1 mt-1">
+                                {Array.from({ length: 10 }).map((_, i) => (
+                                 <div
+                                    key={i}
+                                    className={`skill-bar ${animate && i < skill.level ? 'active' : ''}`}
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                  />
+                                ))}
+                              </div>
                             </div>
-                            <div className="d-flex gap-1 mt-1">
-                              {Array.from({ length: 10 }).map((_, i) => (
-                                <div
-                                  key={i}
-                                  style={{
-                                    width: "50px",
-                                    height: "6px",
-                                    borderRadius: "3px",
-                                    backgroundColor: i < skill.level ? "#f6bd05" : "#446d7b",
-                                    opacity: i < skill.level ? 1 : 0.9,
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="mt-5">
-                        <h5 className='text-info'>Back-End</h5>
-                        {[
-                          { label: "Node JS (Express JS)", level: 8 },
-                          { label: "Springboot", level: 5 },
-                        ].map((skill, idx) => (
-                          <div key={idx} className="mb-2">
-                            <div className="d-flex justify-content-between">
-                              <span>{skill.label}</span>
-                            </div>
-                            <div className="d-flex gap-1 mt-1">
-                              {Array.from({ length: 10 }).map((_, i) => (
-                                <div
-                                  key={i}
-                                  style={{
-                                    width: "50px",
-                                    height: "6px",
-                                    borderRadius: "3px",
-                                    backgroundColor: i < skill.level ? "#f6bd05" : "#446d7b",
-                                    opacity: i < skill.level ? 1 : 0.9,
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      </Col>
-<Col md={6}>
-                      <div className="mt-3">
-                        <h5 className='text-info'>Database</h5>
-                        {[
-                          { label: "MySQL", level: 8 },
-                          { label: "PostgreSQL", level: 5 },
-                          { label: "MongoDB", level: 3 },
-                        ].map((skill, idx) => (
-                          <div key={idx} className="mb-2">
-                            <div className="d-flex justify-content-between">
-                              <span>{skill.label}</span>
-                            </div>
-                            <div className="d-flex gap-1 mt-1">
-                              {Array.from({ length: 10 }).map((_, i) => (
-                                <div
-                                  key={i}
-                                  style={{
-                                    width: "50px",
-                                    height: "6px",
-                                    borderRadius: "3px",
-                                    backgroundColor: i < skill.level ? "#f6bd05" : "#446d7b",
-                                    opacity: i < skill.level ? 1 : 0.9,
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </div>
                           ))}
                         </div>
 
                         <div className="mt-5">
-                        <h5 className='text-info'>Cloud Services and Others</h5>
-                        {[
-                          { label: "Java", level: 5 },
-                          { label: "GitHub", level: 6 },
-                          { label: "C-Panel", level: 8 },
-                          { label: "Microsoft Office", level: 9 },
-                          { label: "VBA Macro", level: 8 },
-                          { label: "PostFujitsu Cloud-O", level: 6 },
-                          { label: "Azure", level: 5 },
-                          { label: "AWS", level: 5 },
-                        ].map((skill, idx) => (
-                          <div key={idx} className="mb-2">
-                            <div className="d-flex justify-content-between">
-                              <span>{skill.label}</span>
+                          <h5 className='text-info'>Back-End</h5>
+                          {[
+                            { label: "Node JS (Express JS)", level: 8 },
+                            { label: "Springboot", level: 5 },
+                          ].map((skill, idx) => (
+                            <div key={idx} className="mb-2">
+                              <div className="d-flex justify-content-between">
+                                <span>{skill.label}</span>
+                              </div>
+                              <div className="d-flex gap-1 mt-1">
+                                {Array.from({ length: 10 }).map((_, i) => (
+                                  <div
+                                    key={i}
+                                    className={`skill-bar ${animate && i < skill.level ? 'active' : ''}`}
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                  />
+                                ))}
+                              </div>
                             </div>
-                            <div className="d-flex gap-1 mt-1">
-                              {Array.from({ length: 10 }).map((_, i) => (
-                                <div
-                                  key={i}
-                                  style={{
-                                    width: "50px",
-                                    height: "6px",
-                                    borderRadius: "3px",
-                                    backgroundColor: i < skill.level ? "#f6bd05" : "#446d7b",
-                                    opacity: i < skill.level ? 1 : 0.9,
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
                       </Col>
-</Row>
+
+                      <Col md={6}>
+                        <div className="mt-3">
+                          <h5 className='text-info'>Database</h5>
+                          {[
+                            { label: "MySQL", level: 8 },
+                            { label: "PostgreSQL", level: 7 },
+                            { label: "MongoDB", level: 3 },
+                          ].map((skill, idx) => (
+                            <div key={idx} className="mb-2">
+                              <div className="d-flex justify-content-between">
+                                <span>{skill.label}</span>
+                              </div>
+                              <div className="d-flex gap-1 mt-1">
+                                {Array.from({ length: 10 }).map((_, i) => (
+                                  <div
+                                    key={i}
+                                    className={`skill-bar ${animate && i < skill.level ? 'active' : ''}`}
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            ))}
+                          </div>
+
+                          <div className="mt-5">
+                          <h5 className='text-info'>Repositories, Cloud Services and Others</h5>
+                          {[
+                            { label: "GitHub", level: 7 },
+                            { label: "C-Panel", level: 8 },
+                            { label: "Microsoft Office", level: 9 },
+                            { label: "VBA Macro", level: 8 },
+                            { label: "PostFujitsu Cloud-O", level: 6 },
+                            { label: "Azure", level: 5 },
+                            { label: "AWS", level: 5 },
+                            { label: "Java", level: 5 },
+                          ].map((skill, idx) => (
+                            <div key={idx} className="mb-2">
+                              <div className="d-flex justify-content-between">
+                                <span>{skill.label}</span>
+                              </div>
+                              <div className="d-flex gap-1 mt-1">
+                                {Array.from({ length: 10 }).map((_, i) => (
+                                  <div
+                                    key={i}
+                                    className={`skill-bar ${animate && i < skill.level ? 'active' : ''}`}
+                                    style={{ transitionDelay: `${i * 100}ms` }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
 
@@ -393,23 +383,6 @@ const Home: React.FC = () =>{
                       </Link>
                     </Card>
                   </Col>
-
-
-                  {/* <Col xs={6} md={2} className='text-center text-light mb-5'>
-                    <Link to="https://billing.pearsportal.com/" style={{ textDecoration: 'none'}}>
-                      <Image src={linao} rounded style={{width:'200px', height:'200px'}}/>
-                      <b className='text-muted'>Billing System</b><br/>
-                      
-                    </Link>
-                  </Col> */}
-                  {/* <Col xs={6} md={2} className='text-center text-light mb-5'>
-                    <Link to="#" style={{ textDecoration: 'none'}}>
-                      <Image src={south} rounded style={{width:'200px', height:'200px'}}/>
-                      <b className='text-muted'>Billing System</b><br/>
-                      <i className='text-muted'>By: Joseph Bryan Egoc</i>
-                    </Link>
-                    
-                  </Col> */}
                  
                   <Col xs={6} md={2}>
                     {/* <Image src={south} roundedCircle className='w-100'/> */}

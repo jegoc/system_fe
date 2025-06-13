@@ -95,7 +95,7 @@ const App: React.FC = () => {
           ))}
         </ul>
       ) : (
-        <p>No users found.</p>
+        <p>No users found...</p>
       )}
     </div>
   );
