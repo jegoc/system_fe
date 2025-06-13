@@ -1,0 +1,10 @@
+.zoom-image {
+    transition: transform 0.3s ease;
+  }
+  
+  .zoom-image:hover {
+    transform: scale(1.05);
+  }
+  body {
+    background: linear-gradient(to top left, #000000, #4681b8, #477347);
+  }
