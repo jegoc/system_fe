@@ -8,3 +8,20 @@
   body {
     background: linear-gradient(to top left, #000000, #4681b8, #477347);
   }
+
+  .skill-bar {
+  width: 50px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #446d7b;
+  opacity: 0.9;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.4s ease, background-color 0.4s ease;
+}
+
+.skill-bar.active {
+  background-color: #f6bd05;
+  opacity: 1;
+  transform: scaleX(1);
+}
