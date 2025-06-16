@@ -128,5 +128,43 @@ export const ForgotResetFailed = () => {
     );
 }
 
+export const SignUpFailed = () => {
+    const closeButtonRef = useRef<HTMLButtonElement | null>(null); 
+    const [show, setShow] = useState(true);
+    const dispatch = useDispatch<AppDispatch>();
+
+    const handleClose = () => {
+        dispatch(clearError()); // Clear error from Redux state
+        setShow(false);
+    }
+
+    useEffect(() => {
+        if (show && closeButtonRef.current) {
+            closeButtonRef.current.focus();
+        }
+    }, [show]);
+
+    return (
+        <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header  className="d-flex justify-content-center">
+                <Modal.Title>
+                    <div className='text-danger'>
+                        <PiWarningDuotone size={100}/>
+                    </div>
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center">
+                <div>
+                    <h4>Sign Up Failed</h4>
+                    <p>You have entered invalid data! Please try again.</p>
+                </div>
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={handleClose} ref={closeButtonRef as React.RefObject<HTMLButtonElement>}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+}
+
 
 
