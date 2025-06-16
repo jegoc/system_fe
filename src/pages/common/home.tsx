@@ -207,7 +207,7 @@ const Home: React.FC = () =>{
                 <Row xs={1} md={4} className="g-1 m-1">
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/booking_menu" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/booking_menu" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={booking} height="200px" />
                         <Card.Body>
                           <Card.Title>Booking Calendar</Card.Title>
@@ -221,7 +221,7 @@ const Home: React.FC = () =>{
 
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/shop" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/shop" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={shopping} height="200px" />
                         <Card.Body>
                           <Card.Title>Shopping Cart</Card.Title>
@@ -235,7 +235,7 @@ const Home: React.FC = () =>{
 
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="https://billing.pearsportal.com/" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="https://billing.pearsportal.com/" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={billing} height="200px" />
                         <Card.Body>
                           <Card.Title>Billing System</Card.Title>
@@ -249,7 +249,7 @@ const Home: React.FC = () =>{
 
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/#" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/#" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={enrollment} height="200px" />
                         <Card.Body>
                           <Card.Title>Online Enrollment</Card.Title>
@@ -265,7 +265,7 @@ const Home: React.FC = () =>{
                 <Row xs={1} md={4} className="g-1 m-1">
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/#" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/#" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={inventory} height="200px" />
                         <Card.Body>
                           <Card.Title>Inventory</Card.Title>
@@ -279,7 +279,7 @@ const Home: React.FC = () =>{
 
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/#" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/#" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={ordering} height="200px" />
                         <Card.Body>
                           <Card.Title>Order System</Card.Title>
@@ -293,7 +293,7 @@ const Home: React.FC = () =>{
                   
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/#" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/#" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={dtr} height="200px" />
                         <Card.Body>
                           <Card.Title>DTR</Card.Title>
@@ -307,7 +307,7 @@ const Home: React.FC = () =>{
 
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/#" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/#" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={payroll} height="200px" />
                         <Card.Body>
                           <Card.Title>Payroll System</Card.Title>

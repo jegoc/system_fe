@@ -148,7 +148,7 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
       onSubmit={handleSubmit}
     >
     {({ values, handleChange, errors, touched }) => (
-    <Container fluid className='' data-bs-theme="dark" style={{background:'#000000'}}>
+    <Container fluid className='' data-bs-theme="dark">
         {/* {loading?<LoadingPage/>:""}
         {failed?<LoginFailed/>:""} */}
 
