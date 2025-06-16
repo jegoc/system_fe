@@ -1,40 +1,43 @@
-// src/components/LoginForm.tsx
 import React, { useState, useEffect } from 'react';
 import {
   Button,
   Container,
   Row,
-  InputGroup,
   Card,
-  Alert,
-  Col,
-  FormCheck
+  Col
 } from 'react-bootstrap';
+import axios from 'axios';
+import apiUrl from '../../components/apiurl';
 import Sidebar  from '../common/sidebar';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { FaUserPlus } from "react-icons/fa";
 import { PiEyeLight } from "react-icons/pi";
 import { PiEyeSlash } from "react-icons/pi";
-import { AiOutlineLogin } from "react-icons/ai";
-import { AiOutlineMail } from "react-icons/ai";
-import { HiMiniUserPlus } from "react-icons/hi2";
-import { FaCalendarAlt } from "react-icons/fa";
-// import { AiOutlineKey } from "react-icons/ai";
 import { AiOutlineSend } from "react-icons/ai";
-import { RiLockPasswordLine } from "react-icons/ri";
 import { Formik, Field, Form, ErrorMessage, getIn } from 'formik';
 import * as Yup from 'yup';
-// import { useDispatch } from 'react-redux';
-// import { loginRequest } from './redux/loginActions';
-import logo from '../../images/logo.png';
+import { useDispatch } from 'react-redux';
+import type { AppDispatch } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../../../redux/reducers';
-// import { LoadingPage,LoginFailed } from '../../../components/loader';
+import { signUpRequest } from './redux/signupActions';
+// import { encryptPath } from '../../components/encryptor';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
+import { LoadingPage } from '../../components/loader';
+import { SignUpFailed } from './loader';
 // import me from '../../../images/casa.jpg';
 // import { getLocalStorageVariable } from '../../../components/localStorage';
 
-const LoginSchema = Yup.object().shape({
+const checkEmailIsActive = async (email: string) => {
+  try {
+    const response = await axios.post(`${apiUrl.url}signup/check-email`, { email }); // Your backend route
+    return response.data.isValid; // should return true or false
+  } catch (err) {
+    return false;
+  }
+};
+
+const SignUpSchema = Yup.object().shape({
   fname: Yup.string()
       .trim()
       .max(30, 'Must be 30 characters or less')
@@ -58,6 +61,8 @@ const LoginSchema = Yup.object().shape({
       .required("Province is required"),
   zip: Yup.string()
       .trim()
+      .max(5, 'Must be 5 characters only')
+      .matches(/^[0-9]+$/, "Please input valid zip code.")
       .required("Zip Code is required"),
   cellphone: Yup.string()
       .trim()
@@ -65,8 +70,17 @@ const LoginSchema = Yup.object().shape({
       .required("Cellphone number is required"),
   email: Yup
       .string()
-      .email('Invalid email')
-      .required('Email is required!'),
+      .email('Invalid email format')
+      .required('Email is required!')
+    .test(
+      'is-valid-email',
+      'Email is not valid or active',
+      async function (value) {
+        if (!value) return false;
+        const isValid = await checkEmailIsActive(value);
+        return isValid;
+      }
+    ),
   password: Yup.string()
       .required("Password is required")
       .min(8, "Password length must be at least 8 characters")
@@ -86,10 +100,11 @@ const LoginSchema = Yup.object().shape({
 
 const Sign_Up: React.FC = () => {
 //   const redirectPath = useSelector((state: RootState) => state.LoginReducer.redirectPath);
-//   const failed = useSelector((state: RootState) => state.LoginReducer.error);
-//   const loading = useSelector((state: RootState) => state.LoginReducer.loading);
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
+  const failed = useSelector((state: RootState) => state.SignUpReducer.error);
+  const loading = useSelector((state: RootState) => state.SignUpReducer.loading);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  // const login = encryptPath('/login');
 
 //   useEffect(() => {
 //     const userId = getLocalStorageVariable<string>('userId');
@@ -127,11 +142,28 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
     };
   }, []);
 
-  const handleSubmit = (values: any) => {
-    const { email, password } = values;
-    // dispatch(loginRequest(email, password));
-    console.log('Form values:', values);
-  };
+  const handleSubmit = async  (values: any) => {
+      const payload = {
+        fname: values.fname,
+        mi: values.mi,
+        lname: values.lname,
+        address: values.address,
+        city: values.city,
+        province: values.province,
+        zip: values.zip,
+        cellphone: values.cellphone,
+        email: values.email,
+        password: values.password,
+      }
+      // const isValid = await checkEmailIsActive(values.email);
+
+      // if (!isValid) {
+      //   setEmailError('Email is not valid or active');
+      //   return; // prevent further submit
+      // }
+      dispatch(signUpRequest(payload));
+      // console.log('Form submitted with values:', payload);
+    };
 
   const handleItemClick = (path: string) => {
     // setSessionVariable('setSelectedItem', path);
@@ -162,22 +194,21 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
         confirm_password: '', 
         confirm: '', 
       }}
-      validationSchema={LoginSchema}
+      validationSchema={SignUpSchema}
       onSubmit={handleSubmit}
     >
     {({ values, handleChange, errors, touched }) => (
     <Container fluid className='' data-bs-theme="dark">
-        {/* {loading?<LoadingPage/>:""}
-        {failed?<LoginFailed/>:""} */}
+        {loading?<LoadingPage/>:""}
+        {failed?<SignUpFailed/>:""}
 
         <Row >
           <Col >      
             <Sidebar  />
           </Col>
 
-          <Col xs={12} className={`mt-5 pt-4 ${isSmallScreen ? '' : 'ps-5'}`}> {/* Conditional rendering for ps-5 class */}
-            {/* <div style={{width:"400px"}}></div> */}
-              <div className={`mt-3 ${isSmallScreen ? '' : 'ms-4 me-1'}`}> {/* Conditional rendering for ms-4 class */}
+          <Col xs={12} className={`mt-5 pt-4 ${isSmallScreen ? '' : 'ps-5'}`}>
+              <div className={`mt-3 ${isSmallScreen ? '' : 'ms-4 me-1'}`}>
                 <Row xs={12} className="g-1 m-1 p-2">
                   <Col className='text-light'>
                     <h4><FaUserPlus size="30" className='text-warning'/> Create Account</h4>
@@ -189,7 +220,7 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                     <Card className="m-1 rounded shadow">
                       <Card.Body>
                             <Form>
-                              <Row>
+                              <Row className='mt-3'>
                                 <Col sm>
                                   <FloatingLabel controlId="floatingInput" label="Firstname" className="mb-3">
                                       <Field 
@@ -204,11 +235,12 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                   </FloatingLabel>
                                 </Col>
                                 <Col sm>
-                                    <FloatingLabel controlId="floatingInput" label="Middle Name" className="mb-3">
+                                    <FloatingLabel controlId="floatingInput" label="MI" className="mb-3">
                                       <Field 
                                         type="text" 
                                         name="mi" 
-                                        placeholder="Middle Name"
+                                        maxLength="1"
+                                        placeholder="MI"
                                         className={`w-100 form-control ${touched.mi && errors.mi ? 'is-invalid' : touched.mi ? 'is-valid' : ''}`}
                                       />
                                       <ErrorMessage name="mi">
@@ -278,7 +310,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                     <FloatingLabel controlId="floatingInput" label="Zip Code" className="mb-3">
                                       <Field 
                                         type="text" 
-                                        name="zip" 
+                                        name="zip"
+                                        maxLength="5"
                                         placeholder="Zip Code"
                                         className={`w-100 form-control ${touched.zip && errors.zip ? 'is-invalid' : touched.zip ? 'is-valid' : ''}`}
                                       />

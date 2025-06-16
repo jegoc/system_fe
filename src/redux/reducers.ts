@@ -12,11 +12,13 @@ import { combineReducers } from 'redux';
 
 // user
 import loginReducer from '../pages/login/redux/loginReducer';
+import signUpReducer from '../pages/login/redux/signupReducer';
 
 const rootReducer = combineReducers({
   // admin
   // user
   LoginReducer: loginReducer,
+  SignUpReducer: signUpReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
