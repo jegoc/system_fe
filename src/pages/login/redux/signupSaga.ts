@@ -25,17 +25,17 @@ function* signUp(action: any): Generator<any, void, AxiosResponse> {
     const formattedDate = formatDate(currentDate);
 
     const account = action.payload;
-    console.log('Account details:', account);
     const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}signup`, account);
     const user = response.data;
 
       if(user!='') {
             
             yield put(signUpSuccess(user));
+            yield put(redirect('/login'));
 
               const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}send_email_no_token`, {
                 to: account.email,
-                subject: 'Email Verification',
+                subject: 'Confirm your Email Address',
                 html: `
                   <div style="background-color: rgb(243,243,243); padding: 30px;">
                     <div style="font-family:Arial, Helvetica, sans-serif; font-size: 14px; border: 1px solid #d1d1d1; border-radius: 20px;">
@@ -46,8 +46,12 @@ function* signUp(action: any): Generator<any, void, AxiosResponse> {
                       Hi ${account.fname},
                       <br/>
                       <br/>
-                        Never share your OTP. Keep your code safe. <br/>Your OTP is : <b> ${action.payload.otp}</b><br/>
-                        This is valid for 3 minutes.<br/><br/>
+                        Welcome to Pears Portal!<br/><br/>
+                        Thank you for signing up. Please verify your email address to complete the registration process.
+                        <br/><br/>
+                        <a href="${apiUrl.url}signup/verify/${account.verify_code}" target="_blank" style="background-color: #4681b8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify Email</a> 
+                        <br/><br/><br/>
+                        
                         If this is not you please contact the system administrator immediately.<br/>
                         Please give us some feedback to improve the system.<br/>Thank you.
                         <br/><br/>
@@ -57,8 +61,6 @@ function* signUp(action: any): Generator<any, void, AxiosResponse> {
                     </div>
                   </div>`,
               });
-
-              yield put(redirect('/login'));
 
               if (response.status === 200) {
                 console.log('Email sent successfully');

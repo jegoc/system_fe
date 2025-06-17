@@ -166,5 +166,45 @@ export const SignUpFailed = () => {
     );
 }
 
+export const SignUpSuccess = () => {
+    const redirectPath = useSelector((state: RootState) => state.SignUpReducer.redirectPath);
+    const closeButtonRef = useRef<HTMLButtonElement | null>(null); 
+    const navigate = useNavigate();
+    const [show, setShow] = useState(true);
+
+    const handleClose = () => {
+        setShow(false);
+        if (redirectPath) {
+            navigate(redirectPath);
+            window.location.reload();
+          }
+    }
+    useEffect(() => {
+        if (show && closeButtonRef.current) {
+          closeButtonRef.current.focus();
+        }
+      }, [show]);
+    return (
+        <Modal show={show} onHide={handleClose} centered>
+            <Modal.Header  className="d-flex justify-content-center">
+                <Modal.Title>
+                    <div className='text-success'>
+                        <PiCheckCircleDuotone size={100}/>
+                    </div>
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="d-flex justify-content-center">
+                <div>
+                    <h4>Thank you for signing up!</h4>
+                    <p>Please verify your email address to complete the registration process.</p>
+                </div>
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-center">
+                {/* <Button variant="secondary" onClick={handleClose} >Yes</Button> */}
+                <Button variant="secondary" onClick={handleClose} ref={closeButtonRef as React.RefObject<HTMLButtonElement>}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+    );
+}
 
 

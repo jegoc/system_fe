@@ -18,15 +18,13 @@ import { Formik, Field, Form, ErrorMessage, getIn } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../redux/store';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { signUpRequest } from './redux/signupActions';
 // import { encryptPath } from '../../components/encryptor';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import { LoadingPage } from '../../components/loader';
-import { SignUpFailed } from './loader';
-// import me from '../../../images/casa.jpg';
-// import { getLocalStorageVariable } from '../../../components/localStorage';
+import { SignUpFailed, SignUpSuccess } from './loader';
 
 const checkEmailIsActive = async (email: string) => {
   try {
@@ -72,15 +70,15 @@ const SignUpSchema = Yup.object().shape({
       .string()
       .email('Invalid email format')
       .required('Email is required!')
-    .test(
-      'is-valid-email',
-      'Email is not valid or active',
-      async function (value) {
-        if (!value) return false;
-        const isValid = await checkEmailIsActive(value);
-        return isValid;
-      }
-    ),
+      .test(
+        'is-valid-email',
+        'Email is not valid or active',
+        async function (value) {
+          if (!value) return false;
+          const isValid = await checkEmailIsActive(value);
+          return isValid;
+        }
+      ),
   password: Yup.string()
       .required("Password is required")
       .min(8, "Password length must be at least 8 characters")
@@ -99,25 +97,44 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const Sign_Up: React.FC = () => {
-//   const redirectPath = useSelector((state: RootState) => state.LoginReducer.redirectPath);
+  const success = useSelector((state: RootState) => state.SignUpReducer.redirectPath);
   const failed = useSelector((state: RootState) => state.SignUpReducer.error);
   const loading = useSelector((state: RootState) => state.SignUpReducer.loading);
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  // const navigate = useNavigate();
   // const login = encryptPath('/login');
 
-//   useEffect(() => {
-//     const userId = getLocalStorageVariable<string>('userId');
-//     const userAuth = getLocalStorageVariable<string>('userAuth');
-//     if (userId && userAuth=='client') {
-//       navigate('/dashboard'); 
-//     }
+  // useEffect(() => {
+  //   // const userId = getLocalStorageVariable<string>('userId');
+  //   // const userAuth = getLocalStorageVariable<string>('userAuth');
+  //   // if (userId && userAuth=='client') {
+  //   //   navigate('/dashboard'); 
+  //   // }
 
-//     if (redirectPath) {
-//       navigate(redirectPath);
-//       window.location.reload();
-//     }
-//   }, [redirectPath, navigate, dispatch]);
+  //   if (success) {
+  //     navigate(success);
+  //     window.location.reload();
+  //   }
+  // }, [success, navigate, dispatch]);
+
+// Start Random string generation for Verification
+  const [randomString, setRandomString] = useState<string>('');
+
+  const generateRandomString = (length: number): string => {
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  };
+
+  useEffect(() => {
+      const generatedString = generateRandomString(10);
+      setRandomString(generatedString);
+  }, []);
+// End Random string generation for Verification
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for password visibility
     const toggleConfirmPasswordVisibility = () => {
@@ -154,29 +171,10 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
         cellphone: values.cellphone,
         email: values.email,
         password: values.password,
+        verify_code: randomString,
       }
-      // const isValid = await checkEmailIsActive(values.email);
-
-      // if (!isValid) {
-      //   setEmailError('Email is not valid or active');
-      //   return; // prevent further submit
-      // }
       dispatch(signUpRequest(payload));
-      // console.log('Form submitted with values:', payload);
     };
-
-  const handleItemClick = (path: string) => {
-    // setSessionVariable('setSelectedItem', path);
-    // navigate(path);
-  };
-
-  const getStyles = (errors:any, fieldName:any) => {
-    if (getIn(errors, fieldName)) {
-      return {
-        border: '1px solid red'
-      }
-    }
-  }
 
   return (
     <Formik
@@ -201,6 +199,7 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
     <Container fluid className='' data-bs-theme="dark">
         {loading?<LoadingPage/>:""}
         {failed?<SignUpFailed/>:""}
+        {success?<SignUpSuccess/>:""}
 
         <Row >
           <Col >      
@@ -225,7 +224,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                   <FloatingLabel controlId="floatingInput" label="Firstname" className="mb-3">
                                       <Field 
                                         type="text" 
-                                        name="fname" 
+                                        name="fname"
+                                        maxLength="30"
                                         placeholder="Firstname"
                                         className={`w-100 form-control ${touched.fname && errors.fname ? 'is-invalid' : touched.fname ? 'is-valid' : ''}`}
                                       />
@@ -252,7 +252,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                     <FloatingLabel controlId="floatingInput" label="Lastname" className="mb-3">
                                       <Field 
                                         type="text" 
-                                        name="lname" 
+                                        name="lname"
+                                        maxLength="30"
                                         placeholder="Lastname"
                                         className={`w-100 form-control ${touched.lname && errors.lname ? 'is-invalid' : touched.lname ? 'is-valid' : ''}`}
                                       />
@@ -268,7 +269,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                   <FloatingLabel controlId="floatingInput" label="Address" className="mb-3">
                                       <Field 
                                         type="text" 
-                                        name="address" 
+                                        name="address"
+                                        maxLength="250"
                                         placeholder="Address Line1"
                                         className={`w-100 form-control ${touched.address && errors.address ? 'is-invalid' : touched.address ? 'is-valid' : ''}`}
                                       />
@@ -284,7 +286,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                   <FloatingLabel controlId="floatingInput" label="City" className="mb-3">
                                       <Field 
                                         type="text" 
-                                        name="city" 
+                                        name="city"
+                                        maxLength="20"
                                         placeholder="City"
                                         className={`w-100 form-control ${touched.city && errors.city ? 'is-invalid' : touched.city ? 'is-valid' : ''}`}
                                       />
@@ -297,7 +300,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                     <FloatingLabel controlId="floatingInput" label="Province" className="mb-3">
                                       <Field 
                                         type="text" 
-                                        name="province" 
+                                        name="province"
+                                        maxLength="20"
                                         placeholder="Province"
                                         className={`w-100 form-control ${touched.province && errors.province ? 'is-invalid' : touched.province ? 'is-valid' : ''}`}
                                       />
@@ -329,7 +333,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                 <FloatingLabel controlId="floatingInput" label="Cellphone" className="mb-3">
                                     <Field 
                                         type="text" 
-                                        name="cellphone" 
+                                        name="cellphone"
+                                        maxLength="11"
                                         placeholder="Cellphone"
                                         className={`w-100 form-control ${touched.cellphone && errors.cellphone ? 'is-invalid' : touched.cellphone ? 'is-valid' : ''}`}
                                     />
@@ -347,7 +352,8 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                 <FloatingLabel controlId="floatingInput" label="E-mail" className="mb-3">
                                     <Field 
                                         type="email" 
-                                        name="email" 
+                                        name="email"
+                                        maxLength="50"
                                         placeholder="E-mail"
                                         className={`w-100 form-control ${touched.email && errors.email ? 'is-invalid' : touched.email ? 'is-valid' : ''}`}
                                     />
@@ -439,7 +445,7 @@ const [isSmallScreen, setIsSmallScreen] = useState(false);
                                 <label>
                                     <Field type="checkbox" name="confirm" />
                                     &nbsp;Please confirm if your agree the
-                                    <Button variant="link" onClick={() => handleItemClick('/terms')} style={{textDecoration: 'none', color: 'rgb(253,185,19)', cursor: 'pointer'}}>Terms and Conditions</Button>
+                                    <Button variant='link' href="/terms.pdf" target='_blank' style={{textDecoration: 'none', color: 'rgb(253,185,19)', cursor: 'pointer'}}>Terms and Conditions</Button>
                                 </label>
                                 <ErrorMessage name="confirm">
                                     {msg => <div style={{color:'rgb(234,109,84)',padding:'5px'}}>{msg}</div>}

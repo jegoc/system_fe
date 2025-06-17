@@ -29,18 +29,12 @@ function* login(action: any): Generator<any, void, AxiosResponse> {
     const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}login`, { email, password, otp });
     const user = response.data;
 
-    console.log('User:', user);
-
       if(user!='') {
             yield put(redirect('/login_otp'));
             yield put(loginSuccess(user));
 
             setLocalStorageVariable('loginEmail', email);
             setLocalStorageVariable('tempuserId', user.id);
-            // setLocalStorageVariable('tempuserAuth', user.auth);
-            // setLocalStorageVariable('tempavatar', user.avatar);
-            // setLocalStorageVariable('temptoken', user.token);
-            // setLocalStorageVariable('temploginDate', formattedDate);
 
               const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}send_email_no_token`, {
                 to: action.payload.email,

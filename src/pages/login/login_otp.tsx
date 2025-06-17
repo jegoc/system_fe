@@ -47,12 +47,9 @@ export const LoginOtp = () => {
             const response = await axios.post(`${apiUrl.url}otp/verify-otp`, { email, otp });
             if (response.data.success) {
                 navigate(`/${encryptedDashboardPath}`);
-                setLocalStorageVariable('loginEmail', '');
+                window.location.reload();
+                setLocalStorageVariable('loginEmail', email);
                 setLocalStorageVariable('userId', tempuserId);
-                // setLocalStorageVariable('userAuth', tempuserAuth);
-                // setLocalStorageVariable('avatar', tempavatar);
-                // setLocalStorageVariable('token', temptoken);
-                // setLocalStorageVariable('loginDate', temploginDate);
 
                     // ***** User Tracking Record *****
                     const recordUserAccess = async () => {

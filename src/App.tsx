@@ -23,6 +23,7 @@ import Shop from './pages/shopping/shop';
 
 // Login
 import Login from './pages/login/login';
+import Logout from './pages/login/logout';
 import Sign_Up from './pages/login/signup';
 import Forgot from './pages/login/forgot';
 
@@ -70,6 +71,7 @@ const App: React.FC = () => {
               
               {/* Login */}
               <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<Logout />} />
               <Route path={`/${signupPath}`} element={<Sign_Up />} />
               <Route path={`/${forgotPath}`} element={<Forgot />} />
               {/* Others */}
