@@ -16,4 +16,5 @@ export interface SignUpState {
     cellphone: string,
     email: string,
     password: string,
+    verify_code: string,
   }

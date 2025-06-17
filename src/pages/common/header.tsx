@@ -12,14 +12,19 @@ import { MdOutlineInfo } from "react-icons/md";
 import { GrServices } from "react-icons/gr";
 import { IoMdPricetags } from "react-icons/io";
 import { BiSolidPhoneCall } from "react-icons/bi";
+import { getLocalStorageVariable, setLocalStorageVariable } from '../../components/localStorage';
 
 const Home: React.FC = () =>{
+    const email = getLocalStorageVariable<string>('loginEmail');
+    const userId = getLocalStorageVariable<string>('userId');
 
-// ****** Navigate to path when click *****
-const handleItemClick = (path: string) => {
+    console.log(email, userId);
+    // ****** Navigate to path when click *****
+    const handleItemClick = (path: string) => {
     // setSessionVariable('setSelectedItem', path);
     // navigate(path);
-  };
+    };
+
   return (
     <Container fluid className='bg-dark' data-bs-theme="dark" style={{position:'fixed', zIndex: 9}}>
         {['sm'].map((expand, index) => (
@@ -79,17 +84,29 @@ const handleItemClick = (path: string) => {
                                     Sign Up
                                 </Button>
                             </Nav> */}
-                            
-                            <Nav.Link className="ms-auto" href="/login">
-                                {/* <Button onClick={() => handleItemClick('/login')} variant="success" type="submit" className="btn btn-block rounded-pill m-1" >
-                                    Log In
-                                </Button> */}
-                                <div className="d-grid gap-2">
-                                    <Button variant="light" type="submit" className="btn btn-block rounded-pill m-1" >
+                            {userId!='' && userId!=null?
+                                <Nav.Link className="ms-auto" href="/logout">
+                                    {/* <Button onClick={() => handleItemClick('/login')} variant="success" type="submit" className="btn btn-block rounded-pill m-1" >
                                         Log In
-                                    </Button>
-                                </div>
-                            </Nav.Link>
+                                    </Button> */}
+                                    <div className="d-grid gap-2">
+                                        <Button variant="light" type="submit" className="btn btn-block rounded-pill m-1" >
+                                            Log Out
+                                        </Button>
+                                    </div>
+                                </Nav.Link>
+                            :
+                                <Nav.Link className="ms-auto" href="/login">
+                                    {/* <Button onClick={() => handleItemClick('/login')} variant="success" type="submit" className="btn btn-block rounded-pill m-1" >
+                                        Log In
+                                    </Button> */}
+                                    <div className="d-grid gap-2">
+                                        <Button variant="light" type="submit" className="btn btn-block rounded-pill m-1" >
+                                            Log In
+                                        </Button>
+                                    </div>
+                                </Nav.Link>
+                            }
 
                                 {/* <Nav.Link className="ms-auto" href="/sign_up">
                                 <Button variant="primary" type="submit" className="btn btn-block rounded-pill m-1" >

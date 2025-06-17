@@ -211,12 +211,12 @@ const User_Login: React.FC = () => {
                           </div>
 
                           <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" className="btn btn-light btn-block rounded-pill mb-2">
+                            <Button variant="primary" type="submit" className="btn btn-light btn-block rounded-pill mb-2" disabled>
                               <FcGoogle size="20" /> Sign in with Google
                             </Button>
                           </div>
                           <div className="d-grid gap-2">
-                            <Button variant="primary" type="submit" className="btn btn-light btn-block rounded-pill mb-2">
+                            <Button variant="primary" type="submit" className="btn btn-light btn-block rounded-pill mb-2" disabled>
                               <BsFacebook size="20" style={{ color: 'rgb(30, 106, 246)'}} /> Sign in with Facebook
                             </Button>
                           </div>
