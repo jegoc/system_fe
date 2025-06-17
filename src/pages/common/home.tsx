@@ -215,7 +215,7 @@ const Home: React.FC = () =>{
 
                   <Col xs={6} md={2} className='text-center text-light mb-5'>
                     <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
-                      <Link to="/upload_text" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/upload_text" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={text} height="150px" style={{width:"150px"}} />
                         <Card.Body>
                           <Card.Title>Text File Repo</Card.Title>
@@ -229,7 +229,7 @@ const Home: React.FC = () =>{
 
                   <Col xs={6} md={2} className='text-center text-light mb-5'>
                     <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
-                      <Link to="/scheduler" style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/scheduler" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={sched} height="150px" style={{width:"150px"}} />
                         <Card.Body>
                           <Card.Title>Scheduler</Card.Title>
