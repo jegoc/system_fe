@@ -18,7 +18,6 @@ const Home: React.FC = () =>{
     const email = getLocalStorageVariable<string>('loginEmail');
     const userId = getLocalStorageVariable<string>('userId');
 
-    console.log(email, userId);
     // ****** Navigate to path when click *****
     const handleItemClick = (path: string) => {
     // setSessionVariable('setSelectedItem', path);

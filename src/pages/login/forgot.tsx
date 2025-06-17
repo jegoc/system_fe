@@ -27,6 +27,25 @@ const Forgot: React.FC = () => {
   const navigate = useNavigate();
   const forgotPath = encryptPath('/forgot');
 
+  // Start Random string generation for Verification
+    const [randomString, setRandomString] = useState<string>('');
+  
+    const generateRandomString = (length: number): string => {
+      const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters.charAt(randomIndex);
+      }
+      return result;
+    };
+  
+    useEffect(() => {
+        const generatedString = generateRandomString(10);
+        setRandomString(generatedString);
+    }, []);
+  // End Random string generation for Verification
+
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 768);
@@ -44,7 +63,12 @@ const Forgot: React.FC = () => {
   };
 
   const handleSubmit = (values: any) => {
-    const { email, password } = values;
+    // const { email, password } = values;
+    const payload = {
+        email: values.email,
+        password: randomString,
+      }
+      // dispatch(forgotRequest(payload));
     // Perform login action
   };
 
@@ -54,7 +78,7 @@ const Forgot: React.FC = () => {
 
   return (
     <Formik
-      initialValues={{ email: '', pin: '' }}
+      initialValues={{ email: '', confirm: false }}
       validationSchema={LoginSchema}
       onSubmit={handleSubmit}
     >
@@ -77,7 +101,7 @@ const Forgot: React.FC = () => {
                             <Alert.Heading><RiLockPasswordLine size="25" /> Forgot Password?</Alert.Heading>
                                 <hr />
                                 <p className="mb-0">
-                                    To reset your password :<br/>&nbsp; ○ Input your email address and PIN Code. <br/>&nbsp; ○ Check your email for your temporary password.
+                                    To reset your password :<br/>&nbsp; ○ Input your email address. <br/>&nbsp; ○ Check your email for your temporary password.
                                 </p>
                         </Alert>
                         <Form>
@@ -101,7 +125,7 @@ const Forgot: React.FC = () => {
                             </Col>
                             </Row>
 
-                            <Row>
+                            {/* <Row>
                             <Col sm>   
                                 <FloatingLabel
                                     label="PIN"
@@ -119,7 +143,7 @@ const Forgot: React.FC = () => {
                                     </ErrorMessage>
                                 </FloatingLabel>
                             </Col>
-                            </Row>
+                            </Row> */}
                             <br/>
                                 <Col sm> 
                                     <label>
