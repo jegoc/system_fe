@@ -5,12 +5,14 @@ import { all, fork } from 'redux-saga/effects';
 // user
 import loginSaga from '../pages/login/redux/loginSaga';
 import signUpSaga from '../pages/login/redux/signupSaga';
+import forgotSaga from '../pages/login/redux/forgotSaga';
 
 function* rootSaga() {
   yield all([
     // admin
     // user
     fork(loginSaga),
+    fork(forgotSaga),
     fork(signUpSaga),
   ]);
 }
