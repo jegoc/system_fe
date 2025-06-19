@@ -33,11 +33,13 @@ import Scheduler from './pages/others/scheduler';
 
 //admin
 //user
+import User_Dashboard from './pages/users/dashboard/dashboard';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true); // Initialize loading state
   const signupPath = encryptPath('/sign_up');
   const forgotPath = encryptPath('/forgot');
+  const userDashboardPath = encryptPath('/user_dashboard');
 
   useEffect(() => {
     // Set a timeout to simulate loading delay, e.g., 2 seconds
@@ -74,6 +76,10 @@ const App: React.FC = () => {
               <Route path="/logout" element={<Logout />} />
               <Route path={`/${signupPath}`} element={<Sign_Up />} />
               <Route path={`/${forgotPath}`} element={<Forgot />} />
+
+              {/* Users */}
+              <Route path={`/${userDashboardPath}`} element={<User_Dashboard />} />
+
               {/* Others */}
               <Route path="/upload_text" element={<Upload_Text />} />
               <Route path="/scheduler" element={<Scheduler />} />

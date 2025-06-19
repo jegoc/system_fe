@@ -50,7 +50,7 @@ export const LoginFailed = () => {
 }
 
 export const ForgotResetSuccess = () => {
-    const redirectPath = useSelector((state: RootState) => state.LoginReducer.redirectPath);
+    const redirectPath = useSelector((state: RootState) => state.ForgotReducer.redirectPath);
     const closeButtonRef = useRef<HTMLButtonElement | null>(null); 
     const navigate = useNavigate();
     const [show, setShow] = useState(true);
@@ -78,8 +78,8 @@ export const ForgotResetSuccess = () => {
             </Modal.Header>
             <Modal.Body className="d-flex justify-content-center">
                 <div>
-                    <h4>Password Reset!</h4>
-                    <p>Password reset successful. <br/>Please kindly check your email for your temporary password.</p>
+                    <h4>Password reset successful!</h4>
+                    <p>Please kindly check your email for your temporary password.</p>
                 </div>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">
@@ -118,7 +118,7 @@ export const ForgotResetFailed = () => {
             <Modal.Body className="d-flex justify-content-center">
                 <div>
                     <h4>Password Reset Failed!</h4>
-                    <p>You have entered invalid e-mail or PIN!</p>
+                    <p>You have entered invalid e-mail!</p>
                 </div>
             </Modal.Body>
             <Modal.Footer className="d-flex justify-content-center">

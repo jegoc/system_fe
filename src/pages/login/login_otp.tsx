@@ -12,7 +12,7 @@ import { getLocalStorageVariable, setLocalStorageVariable } from '../../componen
 import { encryptPath } from '../../components/encryptor';
 
 export const LoginOtp = () => {
-    const encryptedDashboardPath = encryptPath('/sign_up');
+    const encryptedDashboardPath = encryptPath('/user_dashboard');
 
     const [{ otp, numInputs, placeholder, inputType }, setConfig] = React.useState({
         otp: '',
