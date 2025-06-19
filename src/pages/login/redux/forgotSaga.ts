@@ -35,7 +35,7 @@ function* forgotPassword(action: any): Generator<any, void, AxiosResponse> {
 
               const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}send_email_no_token`, {
                 to: account.email,
-                subject: 'Confirm your Email Address',
+                subject: 'Password Reset',
                 html: `
                   <div style="background-color: rgb(243,243,243); padding: 30px;">
                     <div style="font-family:Arial, Helvetica, sans-serif; font-size: 14px; border: 1px solid #d1d1d1; border-radius: 20px;">
@@ -43,14 +43,13 @@ function* forgotPassword(action: any): Generator<any, void, AxiosResponse> {
                       <a href="https://pearsportal.com" target="_blank"><img src="https://pearsportal.com/logo.png" style="width:100px; height:100px" /></a>
                       </div>
                       <div style="padding: 30px; background-color: #FFF; border-radius: 0px 0px 20px 20px;">
-                      Hi ${account.fname},
-                      <br/>
-                      <br/>
-                        Welcome to Pears Portal!<br/><br/>
-                        Thank you for signing up. Please verify your email address to complete the registration process.
+                      Hi ${action.payload.email},
+                        <br/>
+                        <br/>
+                            Your password in Pears Portal Account is reset. <br/>Your temporary password is : <b> ${action.payload.password}</b><br/><br/>
+                            This password is system generated.<br/>
+                            Please update your password after you log in.
                         <br/><br/>
-                        <a href="${apiUrl.url}signup/verify/${account.verify_code}" target="_blank" style="background-color: #4681b8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify Email</a> 
-                        <br/><br/><br/>
                         
                         If this is not you please contact the system administrator immediately.<br/>
                         Please give us some feedback to improve the system.<br/>Thank you.

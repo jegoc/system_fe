@@ -1,56 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Container, Row, Card, Alert, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  Container,
+  Row,
+  Alert,
+  Col,
+  Card
+} from 'react-bootstrap';
 import Sidebar from '../common/sidebar';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { AiOutlineSend } from "react-icons/ai";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { RiLockPasswordLine } from "react-icons/ri";
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { encryptPath } from '../../components/encryptor';
-import logo from '../../images/logo.png';
-import { forgotRequest } from './redux/forgotActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../redux/store';
+import { forgotRequest } from './redux/forgotActions';
+import { RootState } from '../../redux/reducers';
+import { LoadingPage } from '../../components/loader';
+import { ForgotResetFailed, ForgotResetSuccess } from './loader';
+import logo from '../../images/logo.png';
 
 const ForgotSchema = Yup.object().shape({
-  email: Yup
-    .string()
-    .email('Invalid email')
-    .required('Email is required!'),
-  password: Yup
-    .string()
-    .required('Password is required!'),
-  confirm: Yup
-    .bool()
-    .oneOf([true], "Please confirm")
-    .required("Please confirm"),
+    email: Yup
+      .string()
+      .email('Invalid email')
+      .required('Email is required!'),
+    confirm: Yup
+      .bool()
+      .oneOf([true], "Please confirm")
+      .required("Please confirm"),
 });
 
 const Forgot: React.FC = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const navigate = useNavigate();
-  // const forgotPath = encryptPath('/forgot');
+  const loading = useSelector((state: RootState) => state.ForgotReducer.loading);
+  const success = useSelector((state: RootState) => state.ForgotReducer.user);
+  const failed = useSelector((state: RootState) => state.ForgotReducer.error);
+  const [randomString, setRandomString] = useState<string>('');
+
   const dispatch = useDispatch<AppDispatch>();
 
-  // Start Random string generation for Verification
-    const [randomString, setRandomString] = useState<string>('');
-  
-    const generateRandomString = (length: number): string => {
-      const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-      let result = '';
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        result += characters.charAt(randomIndex);
-      }
-      return result;
-    };
-  
-    useEffect(() => {
-        const generatedString = generateRandomString(10);
-        setRandomString(generatedString);
-    }, []);
-  // End Random string generation for Verification
+  const generateRandomString = (length: number): string => {
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
+  };
+
+  useEffect(() => {
+      const generatedString = generateRandomString(10);
+      setRandomString(generatedString);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,27 +69,27 @@ const Forgot: React.FC = () => {
 
   const handleSubmit = (values: any) => {
     const payload = {
-      email: values.email,
-      password: randomString,
+        email: values.email,
+        password: randomString,
+      }
+      dispatch(forgotRequest(payload));
     };
-    console.log("Forgot Password Payload:", payload);
-    // dispatch(forgotRequest(payload));
-    // Perform login action
-  };
 
   return (
     <Formik
       initialValues={{ 
-        email: '', 
-        password: '', 
+        email: '',  
         confirm: false, 
       }}
       validationSchema={ForgotSchema}
       onSubmit={handleSubmit}
     >
       {({ errors, touched }) => (
-        <Container fluid className='' data-bs-theme="dark">
-          <Row>
+      <Container fluid data-bs-theme="dark">
+        {loading?<LoadingPage/>:""}
+        {failed?<ForgotResetFailed/>:""}
+        {success?<ForgotResetSuccess/>:""}
+        <Row>
             <Col><Sidebar /></Col>
 
             <Col xs={12} className={`mt-5 pt-4 ${isSmallScreen ? '' : 'ps-5'}`}>
@@ -105,6 +109,7 @@ const Forgot: React.FC = () => {
                                 To reset your password :<br/>&nbsp; ○ Input your email address. <br/>&nbsp; ○ Check your email for your temporary password.
                             </p>
                         </Alert>
+                        <br/>
                         <Form>
                           <Row>
                               <Col sm>
@@ -138,9 +143,9 @@ const Forgot: React.FC = () => {
                                 </Row>
                               <br/>
                             <div className="d-grid gap-2">
-                                <button  type='submit' className="btn btn-primary btn-block rounded-pill mb-5" >
-                                    <AiOutlineSend size="20"/> Submit
-                                </button>
+                                <Button  type='submit' className="btn btn-primary btn-block rounded-pill mb-5" >
+                                    <AiOutlineSend size="20"/> Reset
+                                </Button>
                             </div>
                         </Form>
                       </Card.Body>
@@ -151,7 +156,7 @@ const Forgot: React.FC = () => {
               </div>
             </Col>
           </Row>
-        </Container>
+      </Container>
       )}
     </Formik>
   );
