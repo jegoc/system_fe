@@ -4,9 +4,17 @@ import {
     Container, 
     Nav,
     Navbar,
-    Offcanvas
+    Offcanvas,
+    Dropdown,
+    NavDropdown
 } from 'react-bootstrap';
+import { encryptPath } from '../../components/encryptor';
+import { useNavigate } from 'react-router-dom';
 import logo_head from '../../images/logo.png';
+import avatar from '../../images/me.jpg'; 
+import { RiFeedbackLine } from "react-icons/ri";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineBell, AiOutlineComment, AiOutlineLogout, AiOutlineIdcard, AiOutlineDashboard } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { MdOutlineInfo } from "react-icons/md";
 import { GrServices } from "react-icons/gr";
@@ -17,11 +25,16 @@ import { getLocalStorageVariable, setLocalStorageVariable } from '../../componen
 const Home: React.FC = () =>{
     const email = getLocalStorageVariable<string>('loginEmail');
     const userId = getLocalStorageVariable<string>('userId');
+    const navigate = useNavigate();
+    const encryptedDashboardPath = encryptPath('/user_dashboard');
+    const encryptedFeedbackdPath = encryptPath('/feedback');
 
     // ****** Navigate to path when click *****
+    // ****** Navigate to path when click *****
     const handleItemClick = (path: string) => {
-    // setSessionVariable('setSelectedItem', path);
-    // navigate(path);
+        // setShow(false);
+        // setSessionVariable('setSelectedItem', path);
+        navigate(path);
     };
 
   return (
@@ -52,48 +65,40 @@ const Home: React.FC = () =>{
                                 <Nav.Link href="/services"><GrServices size={15}/> Services</Nav.Link>
                                 {/* <Nav.Link href="/pricing"><IoMdPricetags size={15}/> Pricing</Nav.Link> */}
                                 <Nav.Link href="/contact"><BiSolidPhoneCall size={15}/> Contact Us</Nav.Link>
-                                {/* <NavDropdown
-                                    title="Dropdown"
-                                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                                >
-                                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action4">
-                                        Another action
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action5">
-                                        Something else here
-                                    </NavDropdown.Item>
-                                </NavDropdown> */}
                             </Nav>
-                            {/* <Form className="d-flex">
-                                <Form.Control
-                                    type="search"
-                                    placeholder="Search"
-                                    className="me-2"
-                                    aria-label="Search"
-                                />
-                                <Button variant="outline-success">Search</Button>
-                            </Form> */}
-                            {/* <Nav className="ms-auto">
-                                <Button onClick={() => handleItemClick('/login')} variant="light" type="submit" className="btn btn-block rounded-pill m-1" >
-                                    Log In
-                                </Button>
-                                <Button onClick={() => handleItemClick('/activation')} variant="primary" type="submit" className="btn btn-block rounded-pill m-1" >
-                                    Sign Up
-                                </Button>
-                            </Nav> */}
                             {userId!='' && userId!=null?
-                                <Nav.Link className="ms-auto" href="/logout">
-                                    {/* <Button onClick={() => handleItemClick('/login')} variant="success" type="submit" className="btn btn-block rounded-pill m-1" >
-                                        Log In
-                                    </Button> */}
-                                    <div className="d-grid gap-2">
-                                        <Button variant="light" type="submit" className="btn btn-block rounded-pill m-1" >
-                                            Log Out
-                                        </Button>
-                                    </div>
-                                </Nav.Link>
+                                <>
+                                    <NavDropdown
+                                        // title={<Image src={userAvatar || '/static/media/default.d1c5ffe2b3cea9d80c7b.jpg'} width="35" height="35" roundedCircle />}
+                                        title={
+                                            <span>
+                                            <GiHamburgerMenu size={20} />&nbsp;
+                                            <img src={avatar} alt="User Avatar" width="35" height="35" className="rounded-circle" />
+                                            </span>
+                                        }
+                                        id="dropdown-button-drop-start"
+                                        drop='start'
+                                        className="btn btn-block rounded-pill" 
+                                    >
+                                        {/* {userAuth!='client'?
+                                        <>
+                                            <NavDropdown.Item onClick={() => handleItemClick(`/${encryptedAdminDashboardPath}`)}><AiOutlineDashboard size="20" /> &nbsp;Dashboard</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item onClick={() => handleItemClick('/admin_profile')}><AiOutlineIdcard size="20" /> &nbsp;Profile</NavDropdown.Item>
+                                            {/* <NavDropdown.Item onClick={() => handleItemClick('/admin_notifications')}><AiOutlineBell size="20" /> &nbsp;Notifications</NavDropdown.Item>
+                                            <NavDropdown.Item onClick={() => handleItemClick('/admin_messages')}><AiOutlineComment size="20" /> &nbsp;Messages</NavDropdown.Item> */}
+                                           
+                                        {/* </>:<> */} 
+                                            <NavDropdown.Item onClick={() => handleItemClick(`${encryptedDashboardPath}`)}><AiOutlineDashboard size="20" /> &nbsp;Dashboard</NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item onClick={() => handleItemClick('/profile')}><AiOutlineIdcard size="20" /> &nbsp;Profile</NavDropdown.Item>
+                                            <Dropdown.Item onClick={() => handleItemClick(`/feedback`)}><RiFeedbackLine size="20" /> &nbsp;Feedback</Dropdown.Item>
+                                        {/* </>
+                                        } */}
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item onClick={() => handleItemClick('/logout')}><AiOutlineLogout size="20" /> &nbsp;Logout</NavDropdown.Item>
+                                  </NavDropdown>
+                                </>
                             :
                                 <Nav.Link className="ms-auto" href="/login">
                                     {/* <Button onClick={() => handleItemClick('/login')} variant="success" type="submit" className="btn btn-block rounded-pill m-1" >
