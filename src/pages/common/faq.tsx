@@ -3,7 +3,6 @@ import {
   Container,
   Row,
   Col,
-  Card,
   Accordion
 } from 'react-bootstrap';
 import Sidebar from './sidebar';
@@ -39,39 +38,23 @@ const Services: React.FC = () => {
               <Col>
                 <Accordion defaultActiveKey="0" flush className="rounded">
                     <Accordion.Item eventKey="0">
-                        <Accordion.Header>Accordion Item #1</Accordion.Header>
+                        <Accordion.Header>What are the benefits of the user by using the system?</Accordion.Header>
                         <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
+                          Tranparency - you can view and monitor your transaction anytime<br/>
+                          Convenience - just a couple clicks away to pay your bills and no more capture of evidence<br/>
+                          Safety - security in the client side and the server side is implemented to ensure the safety of your data<br/>
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="1">
-                        <Accordion.Header>Accordion Item #2</Accordion.Header>
+                        <Accordion.Header>How do we contact for help?</Accordion.Header>
                         <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
+                          Via chat, Email or phone
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="2">
-                        <Accordion.Header>Accordion Item #3</Accordion.Header>
+                        <Accordion.Header>How to avoid system failure?</Accordion.Header>
                         <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                        aliquip ex ea commodo consequat. Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt mollit anim id est laborum.
+                          Conduct Regular Maintenance: Inspection and check-up of the IT systems, and software upgrades will help prevent most of the causes of system failure. 
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
