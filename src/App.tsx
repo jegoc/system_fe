@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LoadingPage } from './components/loader';
-import { encryptPath, decryptPath } from './components/encryptor';
+import { encryptPath } from './components/encryptor';
 
 
 import Test from './pages/test';
@@ -17,23 +17,23 @@ import Footer from './pages/common/footer';
 import Pricing from './pages/common/pricing';
 import FAQ from './pages/common/faq';
 import Feedback from './pages/common/feedback';
-import Billing_Menu from './pages/billing/billing_menu';
-import Booking_Menu from './pages/booking/booking_menu';
+import BillingMenu from './pages/billing/billing_menu';
+import BookingMenu from './pages/booking/booking_menu';
 import Shop from './pages/shopping/shop';
 
 // Login
 import Login from './pages/login/login';
 import Logout from './pages/login/logout';
-import Sign_Up from './pages/login/signup';
+import SignUp from './pages/login/signup';
 import Forgot from './pages/login/forgot';
 
 // Others
-import Upload_Text from './pages/others/upload_text';
+import UploadText from './pages/others/upload_text';
 import Scheduler from './pages/others/scheduler';
 
 //admin
 //user
-import User_Dashboard from './pages/users/dashboard/dashboard';
+import UserDashboard from './pages/users/dashboard/dashboard';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true); // Initialize loading state
@@ -67,25 +67,23 @@ const App: React.FC = () => {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/feedback" element={<Feedback />} />
               <Route path="/pricing" element={<Pricing />} />
-              <Route path="/billing_menu" element={<Billing_Menu />} />
-              <Route path="/booking_menu" element={<Booking_Menu />} />
+              <Route path="/billing_menu" element={<BillingMenu />} />
+              <Route path="/booking_menu" element={<BookingMenu />} />
               <Route path="/shop" element={<Shop />} />
               
               {/* Login */}
               <Route path="/login" element={<Login />} />
               <Route path="/logout" element={<Logout />} />
-              <Route path={`/${signupPath}`} element={<Sign_Up />} />
+              <Route path={`/${signupPath}`} element={<SignUp />} />
               <Route path={`/${forgotPath}`} element={<Forgot />} />
 
               {/* Users */}
-              <Route path={`/${userDashboardPath}`} element={<User_Dashboard />} />
+              <Route path={`/${userDashboardPath}`} element={<UserDashboard />} />
 
               {/* Others */}
-              <Route path="/upload_text" element={<Upload_Text />} />
+              <Route path="/upload_text" element={<UploadText />} />
               <Route path="/scheduler" element={<Scheduler />} />
-              {/* <Route path="/login" element={<LoginForm />} />
-              <Route path="/header" element={<Header />} />
-              <Route path="/activation" element={<Activation />} /> */}
+
             </Routes>
           <Footer/>
         </>
