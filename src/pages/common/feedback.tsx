@@ -22,10 +22,11 @@ const ForgotSchema = Yup.object().shape({
       .string()
       .email('Invalid email')
       .required('Email is required!'),
-    confirm: Yup
-      .bool()
-      .oneOf([true], "Please confirm")
-      .required("Please confirm"),
+    comment: Yup
+      .string()
+      .min(2, 'Too Short!')
+      .max(1000, 'Too Long!')
+      .required('Comment is required!'),
 });
 
 const Feedback: React.FC = () => {
@@ -44,21 +45,14 @@ const Feedback: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // const handleSubmit = (values: any) => {
-  //     const payload = {
-  //         email: values.email,
-  //         password: randomString,
-  //       }
-  //       dispatch(forgotRequest(payload));
-  //     };
-
   const handleSubmit = (values: any) => {
     const payload = {
       rating: rating,
-      comment: comment,
+      email: values.email,
+      comment: values.comment,
     }
-    // dispatch(feedbackRequest(payload));
-    console.log('Feedback submitted:', payload);
+    dispatch(feedbackRequest(payload));
+    // console.log('Feedback submitted:', payload);
     // Reset form fields
     setRating(1);
     setHover(null);
@@ -68,8 +62,8 @@ const Feedback: React.FC = () => {
   return (
     <Formik
           initialValues={{ 
-            email: '',  
-            confirm: false, 
+            email: '',
+            comment:'',
           }}
           validationSchema={ForgotSchema}
           onSubmit={handleSubmit}
@@ -92,10 +86,9 @@ const Feedback: React.FC = () => {
                     <Col sm></Col>
                     <Col md={5} className="p-3 text-center">
                         <Card className="shadow-sm">
-                            <Card.Body>
+                          <Card.Body>
                             <Card.Title className="fw-bold">We value your opinion.</Card.Title>
-
-                                <Form>
+                              <Form>
                                 <p>
                                     How would you rate your overall experience with us?
                                 </p>
@@ -132,6 +125,7 @@ const Feedback: React.FC = () => {
                                           <Field
                                           type="email"
                                           name="email"
+                                          maxLength={100}
                                           placeholder="E-mail"
                                           className={`w-100 form-control ${touched.email && errors.email ? 'is-invalid' : touched.email ? 'is-valid' : ''}`}
                                           />
@@ -141,20 +135,21 @@ const Feedback: React.FC = () => {
                                       </FloatingLabel> 
                                   </Col>
                                 </Row>
-
-                                {/* Comment Field */}
+                                    <Col sm>
                                     <span className="text-light">Kindly take a moment to tell us what you think.</span>
-                                    <Field
-                                      as="textarea"
-                                      rows={6}
-                                      placeholder="Write something..."
-                                      // value={comment}
-                                      // onChange={(value) => setComment(e.target.value)}
-                                    className={`w-100 form-control ${touched.email && errors.email ? 'is-invalid' : touched.email ? 'is-valid' : ''}`}
-                                          />
-                                          <ErrorMessage name="email">
+                                      <FloatingLabel controlId="floatingmessage" label="Message" className="mb-3">
+                                        <Field
+                                          name="comment"
+                                          placeholder="Comment"
+                                          as="textarea"
+                                          style={{ height: '200px' }}
+                                          className={`w-100 form-control ${touched.comment && errors.comment ? 'is-invalid' : touched.comment ? 'is-valid' : ''}`}
+                                        />
+                                        <ErrorMessage name="comment">
                                           {msg => <div className="invalid-feedback">{msg}</div>}
-                                          </ErrorMessage>
+                                        </ErrorMessage>
+                                      </FloatingLabel>
+                                    </Col>
 
                                 {/* Submit */}
                                     <div className="d-grid gap-2 mt-3">
@@ -163,7 +158,6 @@ const Feedback: React.FC = () => {
                                         </Button>
                                     </div>
                                 </Form>
-                            
                             </Card.Body>
                         </Card>
                     </Col>
