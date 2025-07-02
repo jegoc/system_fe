@@ -106,7 +106,7 @@ const Home: React.FC = () =>{
 
                   <Col>
                     <Card className="m-1 rounded shadow-lg zoom-image">
-                      <Link to="/#" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
+                      <Link to="/enroll" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
                         <Card.Img variant="top" src={enrollment} height="200px" />
                         <Card.Body>
                           <Card.Title>Online Enrollment</Card.Title>
