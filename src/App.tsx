@@ -8,7 +8,6 @@ import { encryptPath } from './components/encryptor';
 import Test from './pages/test';
 
 import Home from './pages/common/home';
-// import LoginForm from './pages/login/login';
 import Header from './pages/common/header';
 import About from './pages/common/about';
 import Services from './pages/common/services';
@@ -27,6 +26,9 @@ import Logout from './pages/login/logout';
 import SignUp from './pages/login/signup';
 import Forgot from './pages/login/forgot';
 
+// Enrollment
+import Enroll from './pages/enrollment/enroll';
+
 // Others
 import UploadText from './pages/others/upload_text';
 import Scheduler from './pages/others/scheduler';
@@ -34,6 +36,9 @@ import Scheduler from './pages/others/scheduler';
 //admin
 //user
 import UserDashboard from './pages/users/dashboard/dashboard';
+
+//Scanner
+import UniversalScanner from './pages/shopping/scanner';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true); // Initialize loading state
@@ -77,8 +82,19 @@ const App: React.FC = () => {
               <Route path={`/${signupPath}`} element={<SignUp />} />
               <Route path={`/${forgotPath}`} element={<Forgot />} />
 
+              {/* Enrollment */}
+              <Route path="/enroll" element={<Enroll />} />
+
               {/* Users */}
               <Route path={`/${userDashboardPath}`} element={<UserDashboard />} />
+              
+              {/* Scanner */}
+              <Route path="/scanner" element={<UniversalScanner />} />
+
+              {/* Admin */}
+              {/* Add admin routes here if needed */}
+
+              {/* Common */}
 
               {/* Others */}
               <Route path="/upload_text" element={<UploadText />} />
