@@ -2,33 +2,33 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { AxiosResponse } from 'axios';
 import { 
-  FeedbackActionTypes, 
-  feedbackSuccess, 
-  feedbackFailure, 
+  ContactActionTypes, 
+  contactSuccess, 
+  contactFailure, 
   redirect,
-} from './feedbackActions';
+} from './contactActions';
 import apiUrl from '../../../components/apiurl';
 import axios from 'axios';
 
-function* feedback(action: any): Generator<any, void, AxiosResponse> {
+function* contact(action: any): Generator<any, void, AxiosResponse> {
   try {
     const account = action.payload;
     const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}feedback`, account);
     const user = response.data;
     
       if(user!='') {
-        yield put(feedbackSuccess(user));
+        yield put(contactSuccess(user));
       }else{
-        yield put(feedbackFailure('failed'));
+        yield put(contactFailure('failed'));
       }
   } catch (error) {
     const errorMessage = (error as any).message; 
-    yield put(feedbackFailure(errorMessage));
+    yield put(contactFailure(errorMessage));
   }
 }
 
-function* watchFeedback() {
-  yield takeLatest(FeedbackActionTypes.FEEDBACK_REQUEST, feedback);
+function* watchContact() {
+  yield takeLatest(ContactActionTypes.CONTACT_REQUEST, contact);
 }
 
-export default watchFeedback;
+export default watchContact;

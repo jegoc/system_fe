@@ -12,6 +12,9 @@ import { FaMobileAlt, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineSend, AiOutlineMail } from "react-icons/ai";
 import { Formik, Field, Form, ErrorMessage, getIn } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
+import { contactRequest } from './redux/contactActions';
+import type { AppDispatch } from '../../redux/store';
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string()
@@ -41,7 +44,12 @@ const Contact: React.FC = () => {
   }, []);
 
   const handleSubmit = (values: any) => {
-    const { email, password } = values;
+    const payload = {
+      name: values.name,
+      email: values.email,
+      message: values.message,
+    }
+    console.log(payload);
     // dispatch(loginRequest(email, password));
   };
 
