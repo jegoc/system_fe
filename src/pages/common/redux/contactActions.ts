@@ -1,61 +1,61 @@
-import { User } from './feedbackTypes';
+import { User } from './contactTypes';
 
-export enum FeedbackActionTypes {
-    FEEDBACK_REQUEST = 'FEEDBACK_REQUEST',
-    FEEDBACK_SUCCESS = 'FEEDBACK_SUCCESS',
-    FEEDBACK_FAILURE = 'FEEDBACK_FAILURE',
-    FEEDBACK_REDIRECT = 'FEEDBACK_REDIRECT',
+export enum ContactActionTypes {
+    CONTACT_REQUEST = 'CONTACT_REQUEST',
+    CONTACT_SUCCESS = 'CONTACT_SUCCESS',
+    CONTACT_FAILURE = 'CONTACT_FAILURE',
+    CONTACT_REDIRECT = 'CONTACT_REDIRECT',
     // Clear Error
     CLEAR_ERROR = "CLEAR_ERROR",
   }
   
   // Clear Error
   interface ClearErrorAction {
-    type: FeedbackActionTypes.CLEAR_ERROR;
+    type: ContactActionTypes.CLEAR_ERROR;
   }
 
-  interface FeedbackRequestAction {
-    type: FeedbackActionTypes.FEEDBACK_REQUEST;
+  interface ContactRequestAction {
+    type: ContactActionTypes.CONTACT_REQUEST;
     payload: User;
   }
-  interface FeedbackSuccessAction {
-    type: FeedbackActionTypes.FEEDBACK_SUCCESS;
+  interface ContactSuccessAction {
+    type: ContactActionTypes.CONTACT_SUCCESS;
     payload: User;
   }
-  interface FeedbackFailureAction {
-    type: FeedbackActionTypes.FEEDBACK_FAILURE;
+  interface ContactFailureAction {
+    type: ContactActionTypes.CONTACT_FAILURE;
     payload: string;
   }
-  interface FeedbackRedirectAction {
-    type: FeedbackActionTypes.FEEDBACK_REDIRECT;
+  interface ContactRedirectAction {
+    type: ContactActionTypes.CONTACT_REDIRECT;
     payload: string;
   }
 
-  export type FeedbackAction =
-    | FeedbackRequestAction
-    | FeedbackSuccessAction
-    | FeedbackFailureAction
-    | FeedbackRedirectAction
+  export type ContactAction =
+    | ContactRequestAction
+    | ContactSuccessAction
+    | ContactFailureAction
+    | ContactRedirectAction
     | ClearErrorAction;
-  
-    
-  export const feedbackRequest = (user: User): FeedbackRequestAction => ({
-    type: FeedbackActionTypes.FEEDBACK_REQUEST,
+
+
+  export const contactRequest = (user: User): ContactRequestAction => ({
+    type: ContactActionTypes.CONTACT_REQUEST,
     payload: user,
   });
 
-  export const feedbackSuccess = (user: User): FeedbackSuccessAction => ({
-    type: FeedbackActionTypes.FEEDBACK_SUCCESS,
+  export const contactSuccess = (user: User): ContactSuccessAction => ({
+    type: ContactActionTypes.CONTACT_SUCCESS,
     payload: user,
   });
 
-  export const feedbackFailure = (error: string): FeedbackFailureAction => ({
-    type: FeedbackActionTypes.FEEDBACK_FAILURE,
+  export const contactFailure = (error: string): ContactFailureAction => ({
+    type: ContactActionTypes.CONTACT_FAILURE,
     payload: error,
   });
 
-  export const redirect = (path: string): FeedbackRedirectAction => ({
-    type: FeedbackActionTypes.FEEDBACK_REDIRECT,
+  export const redirect = (path: string): ContactRedirectAction => ({
+    type: ContactActionTypes.CONTACT_REDIRECT,
     payload: path,
   });
   
@@ -63,5 +63,5 @@ export enum FeedbackActionTypes {
 // ********* Clear Errors ****************
 
 export const clearError = (): ClearErrorAction => ({
-  type: FeedbackActionTypes.CLEAR_ERROR,
+  type: ContactActionTypes.CLEAR_ERROR,
 });

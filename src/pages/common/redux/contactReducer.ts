@@ -1,28 +1,28 @@
-import { FeedbackState } from './feedbackTypes';
-import {  FeedbackAction, FeedbackActionTypes } from './feedbackActions';
+import { ContactState } from './contactTypes';
+import {  ContactAction, ContactActionTypes } from './contactActions';
 
-const initialState: FeedbackState = {
+const initialState: ContactState = {
   user: null,
   loading: false,
   error: null,
   redirectPath: null,
 };
 
-const authReducer = (state = initialState, action: FeedbackAction): FeedbackState => {
+const contactReducer = (state = initialState, action: ContactAction): ContactState => {
   switch (action.type) {
-    case FeedbackActionTypes.FEEDBACK_REQUEST:
+    case ContactActionTypes.CONTACT_REQUEST:
       return { ...state, loading: true, error: null };
-    case FeedbackActionTypes.FEEDBACK_SUCCESS:
+    case ContactActionTypes.CONTACT_SUCCESS:
       return { ...state, user: action.payload, loading: false, error: null };
-    case FeedbackActionTypes.FEEDBACK_FAILURE:
+    case ContactActionTypes.CONTACT_FAILURE:
       return { ...state, loading: false, error: action.payload };
-    case FeedbackActionTypes.FEEDBACK_REDIRECT:
+    case ContactActionTypes.CONTACT_REDIRECT:
       return {...state, redirectPath: action.payload };
-    case FeedbackActionTypes.CLEAR_ERROR: // Handle CLEAR_ERROR action
+    case ContactActionTypes.CLEAR_ERROR: // Handle CLEAR_ERROR action
       return { ...state, error: null };
     default:
       return state;
   }
 };
 
-export default authReducer;
+export default contactReducer;
