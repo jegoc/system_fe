@@ -17,6 +17,7 @@ function* feedback(action: any): Generator<any, void, AxiosResponse> {
     const user = response.data;
     
       if(user!='') {
+        yield put(redirect('/feedback'));
         yield put(feedbackSuccess(user));
       }else{
         yield put(feedbackFailure('failed'));

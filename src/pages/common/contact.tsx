@@ -7,6 +7,8 @@ import {
   Col,
 } from 'react-bootstrap';
 import Sidebar from '../common/sidebar';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { FaMobileAlt, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineSend, AiOutlineMail } from "react-icons/ai";
@@ -15,22 +17,29 @@ import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { contactRequest } from './redux/contactActions';
 import type { AppDispatch } from '../../redux/store';
+import { LoadingPage } from '../../components/loader';
+import { ContactFailed, ContactSuccess } from './loader';
 
 const LoginSchema = Yup.object().shape({
   name: Yup.string()
     .trim()
-    .matches(/^([a-z\s A-Z])+$/, "Valid characters from A-Z only"),
+    .max(50, 'Must be 50 characters or less')
+    .required("Name is required"),
   email: Yup.string()
     .trim()
-    .max(30, 'Must be 30 characters or less')
-    .required("Lastname is required"),
+    .max(50, 'Must be 50 characters or less')
+    .required("Email is required"),
   message: Yup.string()
     .trim()
-    .required("Address is required"),
+    .required("Message is required"),
 });
 
 const Contact: React.FC = () => {
+  const success = useSelector((state: RootState) => state.ContactReducer.user);
+  const failed = useSelector((state: RootState) => state.ContactReducer.error);
+  const loading = useSelector((state: RootState) => state.ContactReducer.loading);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,8 +58,7 @@ const Contact: React.FC = () => {
       email: values.email,
       message: values.message,
     }
-    console.log(payload);
-    // dispatch(loginRequest(email, password));
+    dispatch(contactRequest(payload));
   };
 
   const getStyles = (errors: any, fieldName: any) => {
@@ -73,6 +81,9 @@ const Contact: React.FC = () => {
     >
       {({ values, handleChange, errors, touched }) => (
         <Container fluid className='' data-bs-theme="dark">
+          {loading?<LoadingPage/>:""}
+          {failed?<ContactFailed/>:""}
+          {success?<ContactSuccess/>:""}
           <Row>
             <Col>
               <Sidebar />

@@ -13,10 +13,11 @@ import axios from 'axios';
 function* contact(action: any): Generator<any, void, AxiosResponse> {
   try {
     const account = action.payload;
-    const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}feedback`, account);
+    const response: AxiosResponse = yield call(axios.post, `${apiUrl.url}contact`, account);
     const user = response.data;
     
       if(user!='') {
+        yield put(redirect('/contact'));
         yield put(contactSuccess(user));
       }else{
         yield put(contactFailure('failed'));
