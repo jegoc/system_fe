@@ -7,6 +7,8 @@ import {
     Col,
   } from 'react-bootstrap';
 import Sidebar from '../common/sidebar';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -16,6 +18,8 @@ import { MdFeedback } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 import { feedbackRequest } from './redux/feedbackActions';
 import type { AppDispatch } from '../../redux/store';
+import { LoadingPage } from '../../components/loader';
+import { FeedbackFailed, FeedbackSuccess } from './loader';
 
 const ForgotSchema = Yup.object().shape({
     email: Yup
@@ -30,6 +34,9 @@ const ForgotSchema = Yup.object().shape({
 });
 
 const Feedback: React.FC = () => {
+  const success = useSelector((state: RootState) => state.FeedbackReducer.redirectPath);
+  const failed = useSelector((state: RootState) => state.FeedbackReducer.error);
+  const loading = useSelector((state: RootState) => state.FeedbackReducer.loading);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [rating, setRating] = useState<number>(1);
   const [hover, setHover] = useState<number | null>(null);
@@ -70,6 +77,9 @@ const Feedback: React.FC = () => {
         >
           {({ errors, touched }) => (
             <Container fluid data-bs-theme="dark">
+              {loading?<LoadingPage/>:""}
+              {failed?<FeedbackFailed/>:""}
+              {success?<FeedbackSuccess/>:""}
               <Row>
                 <Col>
                   <Sidebar />
