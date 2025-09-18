@@ -19,6 +19,10 @@ import enrollment from '../../images/enrollment.jpg';
 import linao from '../../images/linao.png';
 import south from '../../images/south.png';
 import sched from '../../images/sched.png';
+import addition from '../../images/addition.png';
+import subtraction from '../../images/subtraction.png';
+import multiplication from '../../images/multiplication.png';
+import division from '../../images/division.png';
 import text from '../../images/text.png';
 import ordering from '../../images/ordering.png';
 import inventory from '../../images/inventory.png';
@@ -188,7 +192,7 @@ const Home: React.FC = () =>{
                   <Col xs={6} md={2} className='text-center text-light mb-5'>
                     <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
                       <Link to="https://billing.pearsportal.com/" style={{ textDecoration: 'none'}} className='text-light'>
-                        <Card.Img variant="top" src={linao} height="150px" />
+                        <Card.Img variant="top" src={linao} height="150px" className='mt-3' />
                         <Card.Body>
                           <Card.Title>Billing System</Card.Title>
                         </Card.Body>
@@ -202,7 +206,7 @@ const Home: React.FC = () =>{
                   <Col xs={6} md={2} className='text-center text-light mb-5'>
                     <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
                       <Link to="https://billing.pearsportal.com/" style={{ textDecoration: 'none'}} className='text-light'>
-                        <Card.Img variant="top" src={south} height="150px" />
+                        <Card.Img variant="top" src={south} height="150px"  className='mt-3'/>
                         <Card.Body>
                           <Card.Title>Billing System</Card.Title>
                         </Card.Body>
@@ -216,7 +220,7 @@ const Home: React.FC = () =>{
                   <Col xs={6} md={2} className='text-center text-light mb-5'>
                     <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
                       <Link to="/upload_text" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
-                        <Card.Img variant="top" src={text} height="150px" style={{width:"150px"}} />
+                        <Card.Img variant="top" src={text} height="150px" style={{width:"150px"}} className='mt-3' />
                         <Card.Body>
                           <Card.Title>Text File Repo</Card.Title>
                         </Card.Body>
@@ -230,7 +234,7 @@ const Home: React.FC = () =>{
                   <Col xs={6} md={2} className='text-center text-light mb-5'>
                     <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
                       <Link to="/scheduler" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
-                        <Card.Img variant="top" src={sched} height="150px" style={{width:"150px"}} />
+                        <Card.Img variant="top" src={sched} height="150px" style={{width:"150px"}} className='mt-3' />
                         <Card.Body>
                           <Card.Title>Scheduler</Card.Title>
                         </Card.Body>
@@ -241,14 +245,60 @@ const Home: React.FC = () =>{
                     </Card>
                   </Col>
                  
-                  <Col xs={6} md={2}>
-                    {/* <Image src={south} roundedCircle className='w-100'/> */}
+                  <Col xs={6} md={2} className='text-center text-light mb-5'>
+                    <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
+                      <Link to="/scheduler" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
+                        <Card.Img variant="top" src={addition} height="150px" style={{width:"150px"}} className='mt-3'/>
+                        <Card.Body>
+                          <Card.Title>Addition</Card.Title>
+                        </Card.Body>
+                        <Card.Footer>
+                          <i className='text-muted'>By: Joseph Bryan Egoc</i>
+                        </Card.Footer>
+                      </Link>
+                    </Card>
                   </Col>
-                  <Col xs={6} md={2}>
-                    {/* <Image src={linao} rounded className='w-100'/> */}
+
+                  <Col xs={6} md={2} className='text-center text-light mb-5'>
+                    <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
+                      <Link to="/scheduler" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
+                        <Card.Img variant="top" src={subtraction} height="150px" style={{width:"150px"}} className='mt-3'/>
+                        <Card.Body>
+                          <Card.Title>Subtraction</Card.Title>
+                        </Card.Body>
+                        <Card.Footer>
+                          <i className='text-muted'>By: Joseph Bryan Egoc</i>
+                        </Card.Footer>
+                      </Link>
+                    </Card>
                   </Col>
-                  <Col xs={6} md={2}>
-                    {/* <Image src={south} roundedCircle className='w-100'/> */}
+
+                  <Col xs={6} md={2} className='text-center text-light mb-5'>
+                    <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
+                      <Link to="/scheduler" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
+                        <Card.Img variant="top" src={multiplication} height="150px" style={{width:"150px"}} className='mt-3'/>
+                        <Card.Body>
+                          <Card.Title>Multiplication</Card.Title>
+                        </Card.Body>
+                        <Card.Footer>
+                          <i className='text-muted'>By: Joseph Bryan Egoc</i>
+                        </Card.Footer>
+                      </Link>
+                    </Card>
+                  </Col>
+
+                  <Col xs={6} md={2} className='text-center text-light mb-5'>
+                    <Card className="m-1 rounded shadow-lg"   style={{background:'transparent', border:'none'}}>
+                      <Link to="/scheduler" onClick={() => window.scrollTo(0, 0)} style={{ textDecoration: 'none'}} className='text-light'>
+                        <Card.Img variant="top" src={division} height="150px" style={{width:"150px"}} className='mt-3'/>
+                        <Card.Body>
+                          <Card.Title>Division</Card.Title>
+                        </Card.Body>
+                        <Card.Footer>
+                          <i className='text-muted'>By: Joseph Bryan Egoc</i>
+                        </Card.Footer>
+                      </Link>
+                    </Card>
                   </Col>
                 </Row>
 
